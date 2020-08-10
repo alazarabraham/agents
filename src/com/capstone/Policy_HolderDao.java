@@ -1,17 +1,18 @@
 package com.capstone;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
-public class AgentDao {
+public class Policy_HolderDao {
     private String jdbcURL;
     private String jdbcUsername;
     private String jdbcPassword;
     private Connection jdbcConnection;
      
-    public AgentDao(String jdbcURL, String jdbcUsername, String jdbcPassword) {
+    public Policy_HolderDao(String jdbcURL, String jdbcUsername, String jdbcPassword) {
         this.jdbcURL = jdbcURL;
         this.jdbcUsername = jdbcUsername;
         this.jdbcPassword = jdbcPassword;
@@ -35,29 +36,31 @@ public class AgentDao {
 	        }
 	    }
 	     
-	    public boolean insertAgent(Agent agent) throws SQLException {
-	        String sql = "INSERT INTO agent (firstName, middleName, lastName,password,phone,emailAddress) VALUES (?, ? , ? , ? , ? , ?)";
+	    public boolean insertPolicy_Holder(Policy_Holder policy_holder) throws SQLException {
+	        String sql = "INSERT INTO policy_holder (firstName, middleName, lastName,DOB, password,emailAddress,policy_key) VALUES (?, ? , ? , ? , ? , ?, ?)";
 	        connect();
 	         
 	        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-	        statement.setString(1, agent.getFirstName());
-	        statement.setString(2, agent.getMiddleName());
-	        statement.setString(3, agent.getMiddleName());
-	        statement.setString(4, agent.getPassword());
-	        statement.setString(5, agent.getPhone());
-	        statement.setString(6, agent.getEmailAddress());
-
-	        System.out.println(agent.getFirstName());
+	        statement.setString(1, policy_holder.getFirstName());
+	        statement.setString(2, policy_holder.getMiddleName());
+	        statement.setString(3, policy_holder.getMiddleName());
+	        statement.setString(4, policy_holder.getDOB());
+	        statement.setString(5, policy_holder.getPassword());
+	        statement.setString(6, policy_holder.getEmailAddress());
+	        statement.setInt(7, policy_holder.getPolicy_key());
+	        
+	        System.out.println(policy_holder.getFirstName());
+	         
 	        boolean rowInserted = statement.executeUpdate() > 0;
 	        statement.close();
 	        disconnect();
 	        return rowInserted;
 	    }
 	     
-	    public List<Agent> listAllAgents() throws SQLException {
-	        List<Agent> listAgent = new ArrayList<>();
+	    public List<Policy_Holder> listAllPolicy_Holders() throws SQLException {
+	        List<Policy_Holder> listPolicy_Holder = new ArrayList<>();
 	         
-	        String sql = "SELECT * FROM agent";
+	        String sql = "SELECT * FROM policy_holder";
 	         
 	        connect();
 	         
@@ -65,33 +68,34 @@ public class AgentDao {
 	        ResultSet resultSet = statement.executeQuery(sql);
 	         
 	        while (resultSet.next()) {
-	            int agent_id = resultSet.getInt("agent_id");
+	            int PH_key = resultSet.getInt("PH_key");
 	            String firstName = resultSet.getString("firstName");
 	            String middleName = resultSet.getString("middleName");
 	            String lastName = resultSet.getString("lastName");
+	            String DOB = resultSet.getString("DOB");
 	            String password = resultSet.getString("password");
-	            String phone = resultSet.getString("phone");
 	            String emailAddress = resultSet.getString("emailAddress");
+	            int policy_key = resultSet.getInt("policy_key");
 	             
-	            Agent agent = new Agent(agent_id,firstName,middleName,lastName,password,phone,emailAddress);
-	            listAgent.add(agent);
+	            Policy_Holder policy_holder = new Policy_Holder(PH_key,firstName,middleName,lastName,DOB,password,emailAddress,policy_key);
+	            listPolicy_Holder.add(policy_holder);
 	        }
-	         
+
 	        resultSet.close();
 	        statement.close();
 	         
 	        disconnect();
 	         
-	        return listAgent;
+	        return listPolicy_Holder;
 	    }
 	     
-	    public boolean deleteAgent(Agent agent) throws SQLException {
-	        String sql = "DELETE FROM agent where agent_id = ?";
+	    public boolean deletePolicy_Holder(Policy_Holder policy_holder) throws SQLException {
+	        String sql = "DELETE FROM Policy_holder where ph_key = ?";
 	         
 	        connect();
 	         
 	        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-	        statement.setInt(1, agent.getAgent_id());
+	        statement.setInt(1, policy_holder.getPH_key());
 	         
 	        boolean rowDeleted = statement.executeUpdate() > 0;
 	        statement.close();
@@ -99,34 +103,36 @@ public class AgentDao {
 	        return rowDeleted;     
 	    }
 	     
-	    public boolean updateAgent(Agent agent) throws SQLException {
-	        String sql = "UPDATE agent SET firstName = ?, middleName = ?, lastName = ?, password = ?, phone = ?, emailAddress = ?";
-	        sql += " WHERE agent_id = ?";
+	    public boolean updatePolicy_Holder(Policy_Holder policy_holder) throws SQLException {
+	        String sql = "UPDATE policy_holder SET firstName = ?, middleName = ?, lastName = ?,  DOB = ?, password = ?, emailAddress = ?, policy_key= ?";
+	        sql += " WHERE PH_key = ?";
 	        connect();
 	         
 	        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-	        statement.setString(1, agent.getFirstName());
-	        statement.setString(2, agent.getMiddleName());
-	        statement.setString(3, agent.getLastName());
-	        statement.setString(4, agent.getPassword());
-	        statement.setString(5, agent.getPhone());
-	        statement.setString(6, agent.getEmailAddress());
-	        statement.setInt(7, agent.getAgent_id());
+	        statement.setString(1, policy_holder.getFirstName());
+	        statement.setString(2, policy_holder.getMiddleName());
+	        statement.setString(3, policy_holder.getLastName());
+	        statement.setString(4, policy_holder.getDOB());
+	        statement.setString(5, policy_holder.getPassword());
+	        statement.setString(6, policy_holder.getEmailAddress());
+	        statement.setInt(7, policy_holder.getPolicy_key());
+	        System.out.println(policy_holder.getLastName());
+
+	        statement.setInt(8, policy_holder.getPH_key());
 	        boolean rowUpdated = statement.executeUpdate() > 0;
-	        System.out.println("agent" + agent.getFirstName());
 	        statement.close();
 	        disconnect();
 	        return rowUpdated;     
 	    }
 	     
-	    public Agent getAgent(int agent_id) throws SQLException {
-	        Agent agent = null;
-	        String sql = "SELECT * FROM agent WHERE agent_id = ?";
+	    public Policy_Holder getPolicy_Holder(int PH_key) throws SQLException {
+	        Policy_Holder policy_holder = null;
+	        String sql = "SELECT * FROM policy_holder WHERE ph_key = ?";
 	         
 	        connect();
 	         
 	        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-	        statement.setInt(1, agent_id);
+	        statement.setInt(1, PH_key);
 	         
 	        ResultSet resultSet = statement.executeQuery();
 	         
@@ -134,17 +140,20 @@ public class AgentDao {
 	        	String firstName = resultSet.getString("firstName");
 	            String middleName = resultSet.getString("middleName");
 	            String lastName = resultSet.getString("lastName");
+	            String DOB = resultSet.getString("DOB");
+
 	            String password = resultSet.getString("password");
-	            String phone = resultSet.getString("phone");
 	            String emailAddress = resultSet.getString("emailAddress");
+	            int policy_key = resultSet.getInt("policy_key");
+
 	             
-	            agent = new Agent(firstName,middleName,lastName,password,phone,emailAddress);
+	            policy_holder = new Policy_Holder(firstName,middleName,lastName,DOB,password,emailAddress,policy_key);
 	        }
 	         
 	        resultSet.close();
 	        statement.close();
 	         
-	        return agent;
+	        return policy_holder;
 	    }
 
 
