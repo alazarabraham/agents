@@ -49,7 +49,6 @@ public class Policy_HolderDao {
 	        statement.setString(6, policy_holder.getEmailAddress());
 	        statement.setInt(7, policy_holder.getPolicy_key());
 	        
-	        System.out.println(policy_holder.getFirstName());
 	         
 	        boolean rowInserted = statement.executeUpdate() > 0;
 	        statement.close();
@@ -60,7 +59,7 @@ public class Policy_HolderDao {
 	    public List<Policy_Holder> listAllPolicy_Holders() throws SQLException {
 	        List<Policy_Holder> listPolicy_Holder = new ArrayList<>();
 	         
-	        String sql = "SELECT * FROM policy_holder";
+	        String sql = "SELECT policy_holder.PH_key,policy_holder.firstname,policy_holder.middlename,policy_holder.lastname,policy_holder.dob,policy_holder.password,policy_holder.emailaddress,policy.type from policy_holder inner join policy on policy_holder.policy_key=policy.policy_key";
 	         
 	        connect();
 	         
@@ -75,9 +74,9 @@ public class Policy_HolderDao {
 	            String DOB = resultSet.getString("DOB");
 	            String password = resultSet.getString("password");
 	            String emailAddress = resultSet.getString("emailAddress");
-	            int policy_key = resultSet.getInt("policy_key");
+	            String type = resultSet.getString("type");
 	             
-	            Policy_Holder policy_holder = new Policy_Holder(PH_key,firstName,middleName,lastName,DOB,password,emailAddress,policy_key);
+	            Policy_Holder policy_holder = new Policy_Holder(PH_key,firstName,middleName,lastName,DOB,password,emailAddress,type);
 	            listPolicy_Holder.add(policy_holder);
 	        }
 
@@ -104,8 +103,7 @@ public class Policy_HolderDao {
 	    }
 	     
 	    public boolean updatePolicy_Holder(Policy_Holder policy_holder) throws SQLException {
-	        String sql = "UPDATE policy_holder SET firstName = ?, middleName = ?, lastName = ?,  DOB = ?, password = ?, emailAddress = ?, policy_key= ?";
-	        sql += " WHERE PH_key = ?";
+	        String sql = "UPDATE policy_holder SET firstName = ?, middleName = ?, lastName = ?,  DOB = ?, password = ?, emailAddress = ?, policy_key= ? WHERE PH_key = ?";
 	        connect();
 	         
 	        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
@@ -116,7 +114,9 @@ public class Policy_HolderDao {
 	        statement.setString(5, policy_holder.getPassword());
 	        statement.setString(6, policy_holder.getEmailAddress());
 	        statement.setInt(7, policy_holder.getPolicy_key());
-	        System.out.println(policy_holder.getLastName());
+	        statement.setInt(8, policy_holder.getPH_key());
+	        System.out.println("update ph "+ policy_holder.getPH_key());
+	        System.out.println("update policy_key "+ policy_holder.getPolicy_key());
 
 	        statement.setInt(8, policy_holder.getPH_key());
 	        boolean rowUpdated = statement.executeUpdate() > 0;

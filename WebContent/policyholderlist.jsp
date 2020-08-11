@@ -159,7 +159,7 @@
                     <td><c:out value="${policy_holder.DOB}" /></td>
                     <td><c:out value="${policy_holder.password}" /></td>
                     <td><c:out value="${policy_holder.emailAddress}" /></td>
-                    <td><c:out value="${policy_holder.policy_key}" /></td>
+                    <td><c:out value="${policy_holder.type}" /></td>
                     
       <td>
                         <a href="/Capstoneproject2/editpolicyholder?PH_key=<c:out value='${policy_holder.PH_key}' />">Edit</a>

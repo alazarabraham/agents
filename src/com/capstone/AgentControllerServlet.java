@@ -131,7 +131,7 @@ public class AgentControllerServlet extends HttpServlet {
         String phone = request.getParameter("phone");
         String emailAddress = request.getParameter("emailAddress");
 
- 
+
         Agent agent = new Agent(agent_id, firstName, middleName, lastName,  password,  phone,  emailAddress);
         agentDao.updateAgent(agent);
         response.sendRedirect("listAgent");
@@ -140,7 +140,6 @@ public class AgentControllerServlet extends HttpServlet {
     private void deleteAgent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException {
         int agent_id = Integer.parseInt(request.getParameter("agent_id"));
- 
         Agent agent = new Agent(agent_id);
         agentDao.deleteAgent(agent);
         response.sendRedirect("listAgent");
@@ -178,10 +177,10 @@ public class AgentControllerServlet extends HttpServlet {
         String password = request.getParameter("password");   
         String emailAddress = request.getParameter("emailAddress");
         int policy_key = Integer.parseInt(request.getParameter("policy_key"));
-        Policy_Holder newpolicy_holder = new Policy_Holder(firstName,middleName,lastName,DOB,password, emailAddress, policy_key);
-        policy_holderDao.insertPolicy_Holder(newpolicy_holder);
+        Policy_Holder policy_holder = new Policy_Holder(firstName,middleName,lastName,DOB,password, emailAddress, policy_key);
+        policy_holderDao.insertPolicy_Holder(policy_holder);
         response.sendRedirect("policyholderlist");
-        System.out.println(policy_key);
+        
     }
  
     private void updatePolicy_Holder(HttpServletRequest request, HttpServletResponse response)
@@ -194,6 +193,7 @@ public class AgentControllerServlet extends HttpServlet {
         String password = request.getParameter("password");
         String emailAddress = request.getParameter("emailAddress");
         int policy_key = Integer.parseInt(request.getParameter("policy_key"));
+        String type = request.getParameter("type");
 
 
  

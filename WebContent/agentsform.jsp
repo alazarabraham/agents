@@ -140,8 +140,12 @@
             <caption>
                 <h2>
                     <c:if test="${agent != null}">
+                    	<form action="updateagent" method="post">
+                    
                     </c:if>
                     <c:if test="${agent == null}">
+                       <form action="insertagent" method="post">
+                    
                         
                     </c:if>
                 </h2>

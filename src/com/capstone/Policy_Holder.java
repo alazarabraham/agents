@@ -9,7 +9,16 @@ public class Policy_Holder {
 	private String password;
 	private String emailAddress;
 	private int policy_key;
+	private String type;
 	
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	public Policy_Holder() {
     }
  
@@ -21,6 +30,7 @@ public class Policy_Holder {
         this(firstName,middleName,lastName,DOB, password, emailAddress, policy_key);
         this.PH_key = PH_key;
     }
+    
      
     public Policy_Holder(String firstName, String middleName, String lastName, String DOB, String password,  String emailAddress,int policy_key) {
         this.firstName = firstName;
@@ -30,6 +40,21 @@ public class Policy_Holder {
         this.password = password;
         this.emailAddress = emailAddress;
         this.policy_key = policy_key;
+
+    }
+    
+    public Policy_Holder(int PH_key, String firstName,String middleName,String lastName, String DOB, String password, String emailAddress,String type) {
+        this(firstName,middleName,lastName,DOB, password, emailAddress, type);
+        this.PH_key = PH_key;
+    }
+    public Policy_Holder(String firstName, String middleName, String lastName, String DOB, String password,  String emailAddress,String type) {
+        this.firstName = firstName;
+        this.middleName = middleName;
+        this.lastName = lastName;
+        this.DOB = DOB;
+        this.password = password;
+        this.emailAddress = emailAddress;
+        this.type = type;
 
     }
     public Policy_Holder(String firstName, String middleName, String lastName, String DOB, String password,  String emailAddress) {

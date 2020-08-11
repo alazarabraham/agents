@@ -47,7 +47,7 @@ public class AgentDao {
 	        statement.setString(5, agent.getPhone());
 	        statement.setString(6, agent.getEmailAddress());
 
-	        System.out.println(agent.getFirstName());
+	        System.out.println("insert " + agent.getAgent_id());
 	        boolean rowInserted = statement.executeUpdate() > 0;
 	        statement.close();
 	        disconnect();
@@ -72,9 +72,11 @@ public class AgentDao {
 	            String password = resultSet.getString("password");
 	            String phone = resultSet.getString("phone");
 	            String emailAddress = resultSet.getString("emailAddress");
-	             
+	            
+
 	            Agent agent = new Agent(agent_id,firstName,middleName,lastName,password,phone,emailAddress);
 	            listAgent.add(agent);
+	            agent.setAgent_id(agent_id);
 	        }
 	         
 	        resultSet.close();
@@ -92,7 +94,7 @@ public class AgentDao {
 	         
 	        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 	        statement.setInt(1, agent.getAgent_id());
-	         
+	        System.out.println(" delete agent " + agent.getAgent_id()); 
 	        boolean rowDeleted = statement.executeUpdate() > 0;
 	        statement.close();
 	        disconnect();
@@ -100,10 +102,9 @@ public class AgentDao {
 	    }
 	     
 	    public boolean updateAgent(Agent agent) throws SQLException {
-	        String sql = "UPDATE agent SET firstName = ?, middleName = ?, lastName = ?, password = ?, phone = ?, emailAddress = ?";
-	        sql += " WHERE agent_id = ?";
+	        String sql = "UPDATE agent SET firstName = ?, middleName = ?, lastName = ?, password = ?, phone = ?, emailAddress = ? ";
+	        sql+= "WHERE firstName = ?";
 	        connect();
-	         
 	        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 	        statement.setString(1, agent.getFirstName());
 	        statement.setString(2, agent.getMiddleName());
@@ -111,9 +112,13 @@ public class AgentDao {
 	        statement.setString(4, agent.getPassword());
 	        statement.setString(5, agent.getPhone());
 	        statement.setString(6, agent.getEmailAddress());
-	        statement.setInt(7, agent.getAgent_id());
+	        
+	        statement.setString(7, agent.getFirstName());
+	        System.out.println(" firstname " + agent.getFirstName()); 
+
+	        System.out.println(" update agent " + agent.getAgent_id()); 
+
 	        boolean rowUpdated = statement.executeUpdate() > 0;
-	        System.out.println("agent" + agent.getFirstName());
 	        statement.close();
 	        disconnect();
 	        return rowUpdated;     
