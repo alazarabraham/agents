@@ -9,6 +9,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.capstone.login.AdminDAO;
  
 /**
  * ControllerServlet.java
@@ -77,11 +79,16 @@ public class AgentControllerServlet extends HttpServlet {
             default:
                 listAgent(request, response);
                 break;
+            
             }
+   
+                
+                    
         } catch (SQLException ex) {
             throw new ServletException(ex);
         }
     }
+   
  
     private void listAgent(HttpServletRequest request, HttpServletResponse response)
             throws SQLException, IOException, ServletException {

@@ -103,7 +103,7 @@ public class AgentDao {
 	     
 	    public boolean updateAgent(Agent agent) throws SQLException {
 	        String sql = "UPDATE agent SET firstName = ?, middleName = ?, lastName = ?, password = ?, phone = ?, emailAddress = ? ";
-	        sql+= "WHERE firstName = ?";
+	        sql+= "WHERE emailAddress = ?";
 	        connect();
 	        PreparedStatement statement = jdbcConnection.prepareStatement(sql);
 	        statement.setString(1, agent.getFirstName());
@@ -113,11 +113,8 @@ public class AgentDao {
 	        statement.setString(5, agent.getPhone());
 	        statement.setString(6, agent.getEmailAddress());
 	        
-	        statement.setString(7, agent.getFirstName());
-	        System.out.println(" firstname " + agent.getFirstName()); 
-
-	        System.out.println(" update agent " + agent.getAgent_id()); 
-
+	        statement.setString(7, agent.getEmailAddress());
+	       
 	        boolean rowUpdated = statement.executeUpdate() > 0;
 	        statement.close();
 	        disconnect();

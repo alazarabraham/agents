@@ -8,7 +8,7 @@ public class AdminDAO {
     ClassNotFoundException {
 String jdbcURL = "jdbc:mysql://localhost:3306/capstone";
 String dbUser = "root";
-String dbPassword = "mysql";
+String dbPassword = "markos";
 
 Class.forName("com.mysql.cj.jdbc.Driver");
 Connection connection = DriverManager.getConnection(jdbcURL, dbUser, dbPassword);
